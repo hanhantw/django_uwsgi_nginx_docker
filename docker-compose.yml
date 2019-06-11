@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_IN_CONTAINER}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  nginx:
+    # restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_IN_CONTAINER}
+      - ./log:/var/log/nginx
+      - ./nginx/sites/:/etc/nginx/sites-available
+    links:
+      - web:web
+  
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
