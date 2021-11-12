@@ -1,9 +1,24 @@
 # django_uwsgi_nginx_docker
+
 Build a diango project with nginx and uwsgi on Docker
 
+## Project structure (with default files)
 
-### Project structure
--- app
--- nginx
--- log
--- db
+.
++-- app
+|   +-- requirement.txt
++-- nginx
+|   +-- sites
+|   |   +-- {site}.conf
+|   +-- Dockerfile
+|   +-- nginx.conf
++-- log
++-- .env
++-- docker-compose.yml
++-- Dockerfile
+
+## Depoly
+
+```shell
+docker-compose run web django-admin startproject main .
+```
